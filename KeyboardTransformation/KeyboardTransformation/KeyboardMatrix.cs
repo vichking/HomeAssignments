@@ -93,10 +93,14 @@ namespace KeyboardTransformation
             {
                 switch (flips[i])
                 {
-                    case "H": coord = FlipHorizontally(coord); break;
-                    case "V": coord = FlipVertically(coord); break;
-                    case "-1": coord = ShiftLeft(coord); break;
-                    case "1": coord = ShiftRight(coord); break;
+                    case "H":
+                        coord = FlipHorizontally(coord); break;
+                    case "V":
+                        coord = FlipVertically(coord); break;
+                    case "-1":
+                        coord = ShiftLeft(coord); break;
+                    case "1":
+                        coord = ShiftRight(coord); break;
                 }
             }
             return Matrix[coord.i][coord.j];
@@ -107,12 +111,18 @@ namespace KeyboardTransformation
         public void Transform(string str, string transformation)
         {
             var result = new char[str.Length];
+
             for (int i = 0; i < str.Length; i++)
             {
-                result[i] = TransformChar(str[i], transformation);
+                if (char.IsUpper(str[i]))
+                {
+                    var myChar = TransformChar(char.ToLower(str[i]), transformation);
+                    result[i] = char.ToUpper(myChar);
+                }
+                else
+                    result[i] = TransformChar(str[i], transformation);
             }
             TransformedString = new String(result);
         }
-
     }
 }
